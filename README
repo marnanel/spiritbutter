@@ -1,0 +1,7 @@
+This is Spiritbutter, a simple CMS.  All the HTML output
+is placed in static files; there is no dynamic generation.
+
+A sample website maintained in Spiritbutter may be found
+at <URL:http://www.chiark.greenend.org.uk/ucgi/~tthurman/git/thurman-org-uk.git/>.
+
+Further documentation will follow later.

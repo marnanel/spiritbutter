@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sb:page xmlns="http://www.w3.org/1999/xhtml" xmlns:sb="http://thomasthurman.org/spiritbutter/ns" xml:lang="en-gb">
+  <sb:field name="title" value="Gone."/>
+  <sb:field name="parent" value="404"/>
+  <sb:body><p>This is not a 404 page.  <a href="http://diveintomark.org/archives/2003/03/27/http_error_410_gone">This is a 410 page.</a></p>
+</sb:body></sb:page>

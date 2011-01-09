@@ -1,0 +1,22 @@
+$VAR1 = bless( {
+                 '404.html' => {
+                                 'body' => '<p>So many years have passed since first you sought<br/>the lands beyond the edges of the sky,<br/>
+so many moons reflected in your eye,<br/>
+(familiar newness, fear of leaving port),<br/>
+since first you sought, and failed, and learned to fall,<br/>
+(first hope, then cynicism, silent dread,<br/>
+the countless stars, still counting overhead<br/>
+the seconds to your final voyage of all...)<br/>
+and last, in glory gold and red around<br/>
+your greatest search, your final quest to know!<br/>
+yet... ashes drift, the embers cease to glow,<br/>
+and darkened life in frozen death is drowned;<br/>
+and ashes on the swell are seen no more.<br/>
+The silence surges. <b>Error 404</b>.</p>\'	
+',
+                                 'filedate' => 1289578910,
+                                 'date' => 1289578910,
+                                 'title' => 'Page not found.',
+                                 'toplink' => '100'
+                               }
+               }, 'App::Spiritbutter::Parser' );
