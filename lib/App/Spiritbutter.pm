@@ -72,11 +72,35 @@ sub details_of {
     return %result;
 }
 
+sub look_up_site {
+    my ($wanted) = @_;
+
+    # FIXME: there is probably a better way to look up
+    # XDG directory names
+    my $filename = "$ENV{HOME}/.config/spiritbutter/sites";
+    return undef unless -e $filename;
+
+    my $result;
+    open SITES, "<$filename" or die "$!";
+    while (<SITES>) {
+        my ($site, $dir) = m/^(.*?)=(.*)$/;
+        if (defined $site && defined $dir && $site eq $wanted) {
+            $result = $dir;
+            last;
+        }
+    }
+    close SITES or die "$!";
+    return $result;
+}
+
 sub handle {
     my $dir = $ARGV[0];
 
-    die "Please give the name of a directory\n" unless $dir;
-    die "$dir is not a directory\n" unless -d $dir;
+    die "Please give the name of a site\n" unless $dir;
+    if (!-d $dir) {
+        $dir = look_up_site($dir);
+        die "That is neither a directory nor a known site\n" unless $dir;
+    }
 
     $dir =~ s,/$,, if $dir ne '/';
 
