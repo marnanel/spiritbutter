@@ -93,6 +93,13 @@ sub look_up_site {
     return $result;
 }
 
+sub ensure_dirs {
+    my ($path) = @_;
+    $path =~ s/\/[^\/]*$//;
+    return if -d $path;
+    mkdir $path;
+}
+
 sub handle {
     my $dir = $ARGV[0];
 
@@ -118,6 +125,7 @@ sub handle {
         if ($details{'action'} eq 'ignore') {
             # ignore it
         } elsif ($details{'action'} eq 'interpret') {
+            ensure_dirs($details{'target'});
             print "$details{target}\n";
             open OUT, ">$details{target}" or die "Can't open $details{target}: $!";
             binmode OUT, ":utf8";
@@ -125,6 +133,7 @@ sub handle {
             close OUT or die "Can't close $details{target}: $!";
         } elsif ($details{'action'} eq 'copy') {
             my $content = read_file($file);
+            ensure_dirs($details{'target'});
             write_file($details{'target'}, $content);
         } else {
             die "Unknown action on $file: $details{'action'}";
