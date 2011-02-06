@@ -159,8 +159,11 @@ sub toplinks {
 
        $href =~ s/\/index.html$/\//;
 
+       my $title = $self->{$k}->{'toplinktitle'};
+       $title = $self->{$k}->{'title'} unless $title;
+
        push @temp, {
-           name => $self->{$k}->{'title'},
+           name => $title,
            href => $href,
            toplink => $self->{$k}->{'toplink'},
        };
