@@ -71,8 +71,11 @@ sub new {
 
         my %result;
 
-        # if we're inside an <sb:body> tag
+        # if we're inside a <body> tag
         my $in_body = 0;
+
+        # if we're inside a <title> tag
+        my $in_title = 0;
 
         # if we have JUST seen an open tag
         # (so that a close tag should modify it)
@@ -85,14 +88,19 @@ sub new {
                     if ($tag eq 'sb:field') {
                         my %attrs = @attrs;
 
+                        # FIXME: These could be better for debugging!
+                        # They should be represented as XML parser errors.
                         die "<sb:field> needs a name attribute" unless defined $attrs{'name'};
                         die "<sb:field> needs a value attribute" unless defined $attrs{'value'};
 
                         $result{$attrs{'name'}} = $attrs{'value'};
 
-                    } elsif ($tag eq 'sb:body') {
+                    } elsif ($tag eq 'body') {
                         $in_body = 1;
                         $result{'body'} = '';
+                     } elsif ($tag eq 'title') {
+                        $in_title = 1;
+                        $result{'title'} = '';
                     } elsif ($in_body) {
                         $result{'body'} .= "<$tag";
 
@@ -107,8 +115,10 @@ sub new {
                 },
                 End   => sub {
                     my ($parser, $tag) = @_;
-                    if ($tag eq 'sb:body') {
+                    if ($tag eq 'body') {
                         $in_body = 0;
+                    } elsif ($tag eq 'title') {
+                        $in_title = 0;
                     } elsif ($in_body) {
                         if ($open_and_shut) {
                             $result{'body'} =~ s/>$/\/>/;
@@ -123,9 +133,12 @@ sub new {
 
                     if ($in_body) {
                         $result{'body'} .= $text;
-                        $open_and_shut = 0;
+                    } elsif ($in_title) {
+                        $result{'title'} .= $text;
                     }
-                }});
+                    $open_and_shut = 0;
+                }},
+                ErrorContext=>3);
 
         $p->parsefile($filename);
 
